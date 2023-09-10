@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Введите пароль администратора"
+        android:layout_marginStart="12dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/intelone"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/text_all"
+        android:textColorHint="@color/text_all"
+        android:textSize="16sp"
+        android:hint="Пароль"
+        android:minHeight="48dp" />
+
+</LinearLayout>

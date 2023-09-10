@@ -62,14 +62,12 @@ class MainActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.password_edit_text)
     }
 
-    private fun showAdminPasswordDialog(){
-        val builder =  AlertDialog.Builder(this)
-        builder.setTitle("Введите пароль администратора")
+    private fun showAdminPasswordDialog() {
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialogStyle)
+        val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
+        builder.setView(dialogView)
 
-        // Создаем EditText для ввода пароля
-        val passwordEditText = EditText(this)
-        builder.setView(passwordEditText)
-
+        val passwordEditText = dialogView.findViewById<EditText>(R.id.passwordEditText)
         builder.setPositiveButton("OK") { _, _ ->
             val enteredPassword = passwordEditText.text.toString()
             val correctPassword = "123456" // Пароль для входа в режим Admin
@@ -85,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.show()
     }
+
 
     private fun onLoginButtonClicked(){
         val email: String = emailEditText.text.toString()
