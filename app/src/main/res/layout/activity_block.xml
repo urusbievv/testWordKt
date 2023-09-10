@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/two_blue"
+    android:background="@color/dark_gray"
     android:padding="16dp">
 
 
 
 
     <TextView
-        android:textColor="@color/text_all"
-        android:layout_marginTop="60dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="80dp"
         android:id="@+id/testView3"
         android:fontFamily="@font/intelone"
         android:layout_width="wrap_content"
@@ -59,12 +59,11 @@
                 android:gravity="top"
                 android:hint="@string/input_test_1"
                 android:inputType="text"
-                android:fontFamily="@font/intelone"
                 android:minHeight="48dp"
                 android:paddingLeft="14dp"
                 android:paddingTop="14dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/text_all"
+                android:textColorHint="@color/text_in"
                 android:textSize="18sp" />
 
             <!-- Второй EditText -->
@@ -80,11 +79,10 @@
                 android:hint="@string/input_test_2"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:fontFamily="@font/intelone"
                 android:paddingLeft="14dp"
                 android:paddingTop="14dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/text_all"
+                android:textColorHint="@color/text_in"
                 android:textSize="18sp" />
 
             <!-- Третий EditText -->
@@ -99,12 +97,11 @@
                 android:gravity="top"
                 android:hint="@string/input_test_3"
                 android:inputType="text"
-                android:fontFamily="@font/intelone"
                 android:minHeight="48dp"
                 android:paddingLeft="14dp"
                 android:paddingTop="14dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/text_all"
+                android:textColorHint="@color/text_in"
                 android:textSize="18sp" />
 
 
@@ -119,12 +116,11 @@
                 android:gravity="top"
                 android:hint="@string/input_test_4"
                 android:inputType="text"
-                android:fontFamily="@font/intelone"
                 android:minHeight="48dp"
                 android:paddingLeft="14dp"
                 android:paddingTop="14dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/text_all"
+                android:textColorHint="@color/text_in"
                 android:textSize="18sp" />
 
             <EditText
@@ -139,11 +135,10 @@
                 android:hint="@string/input_test_5"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:fontFamily="@font/intelone"
                 android:paddingLeft="14dp"
                 android:paddingTop="14dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/text_all"
+                android:textColorHint="@color/text_in"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -170,7 +165,6 @@
             android:paddingHorizontal="50dp"
             android:backgroundTint="@color/li_gray"
             android:layout_marginRight="3dp"
-            android:fontFamily="@font/intelone"
             android:textSize="20sp" />
 
         <Button
@@ -178,9 +172,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/go"
-            android:fontFamily="@font/intelone"
             android:textColor="@color/white"
-            android:backgroundTint="@color/blue"
+            android:backgroundTint="@color/main_b"
             android:layout_marginLeft="3dp"
             android:paddingHorizontal="50dp"
             android:textSize="20sp" />
@@ -191,17 +184,14 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentStart="true"
         android:background="@drawable/exit_btn"
-        android:minWidth="58dp"
-        android:minHeight="38dp"
+        android:minWidth="26dp"
+        android:minHeight="32dp"
         android:onClick="goBack"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-        app:tint="@color/text_all"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        />
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
 </RelativeLayout>

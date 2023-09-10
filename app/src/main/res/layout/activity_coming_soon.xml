@@ -4,35 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/two_blue"
+    android:background="@color/dark_gray"
     tools:context=".activity.blocks.ComingSoonActivity">
 
 
     <TextView
 
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/intelone"
         android:textSize="19sp"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/dark_pig"
         android:text="@string/time_test" />
 
     <ImageButton
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="13dp"
         android:background="@drawable/exit_btn"
         android:minWidth="58dp"
         android:minHeight="38dp"
         android:onClick="goBack"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-        app:tint="@color/text_all"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        />
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
 </RelativeLayout>

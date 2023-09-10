@@ -5,7 +5,7 @@
     android:id="@+id/root_element"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/two_blue"
+    android:background="@color/dark_gray"
     tools:context=".activity.MainActivity">
 
     <LinearLayout
@@ -50,7 +50,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/text_all"
+            android:textColorHint="@color/text_in"
             android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
@@ -70,7 +70,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/text_all"
+            android:textColorHint="@color/text_in"
             android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/blue_main"
+            android:backgroundTint="@color/main_b"
             android:onClick="onLoginButtonClicked"
             android:padding="20dp"
             android:text="@string/sigh_in"

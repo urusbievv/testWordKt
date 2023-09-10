@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/text_all"
-        android:textColorHint="@color/text_all"
+        android:backgroundTint="@color/text_in"
+        android:textColorHint="@color/text_in"
         android:textSize="16sp"
         android:hint="Пароль"
         android:minHeight="48dp" />

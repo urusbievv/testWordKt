@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#ffffff</color>
+    <color name="white">#E9EAEE</color>
     <color name="night_blue">#1c1c1c</color>
     <color name="hh">#2d2d2e</color>
     <color name="green_white">#daeff5</color>
     <color name="w_gray">#869ab0</color>
     <color name="light_gray">#bababa</color>
+    <color name="fon_gray">#1F2229</color>
     <color name="b_gray">#808080</color>
     <color name="chat_gray">#2d3c45</color>
     <color name="gray_ff">#292f36</color>
     <color name="li_gray">#2f435e</color>
-    <color name="admin_main">#253950</color>
+    <color name="admin_main">#34393C</color>
     <color name="text_gray">#e1e2e3</color>
     <color name="shit">#665c4f</color>
     <color name="pig">#9e1061</color>
     <color name="dark_pig">#914d54</color>
     <color name="blue">#217BF4</color>
     <color name="blue_main">#1E5FB6</color>
+    <color name="main_b">#4B5EFE</color>
+    <color name="blue_li">#6D77EF</color>
     <color name="light_red">#d95a4e</color>
     <color name="blue_gray">#586170</color>
     <color name="two_blue">#19222e</color>
+    <color name="dark_gray">#191A1F</color>
+    <color name="text_in">#4F5259</color>
     <color name="yellow">#b1c232</color>
     <color name="green_sup">#2e6e41</color>
     <color name="text_all">#869ab0</color>
