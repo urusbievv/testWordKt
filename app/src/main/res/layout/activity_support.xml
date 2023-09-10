@@ -60,7 +60,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_below="@+id/et_message"
-        android:backgroundTint="@color/green_sup"
+        android:backgroundTint="@color/main_b"
         android:text="@string/send" />
 
 </RelativeLayout>

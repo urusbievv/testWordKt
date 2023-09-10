@@ -54,7 +54,7 @@
     <string name="reg_password">Пароль</string>
     <string name="reg_phone">Номер телефона</string>
     <string name="register_user">Зарегистрировать</string>
-    <string name="hello_admin">Привет Админ</string>
+    <string name="hello_admin">Регистрация</string>
     <string name="entrance_admin">Админ</string>
     <string name="login_firebase">Зайти в Firebase</string>
     <string name="answers_user">Посмотреть ответы</string>

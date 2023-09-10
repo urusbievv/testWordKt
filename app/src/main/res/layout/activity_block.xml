@@ -12,14 +12,14 @@
 
     <TextView
         android:textColor="@color/white"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:id="@+id/testView3"
         android:fontFamily="@font/intelone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/log_block"
-        android:textSize="23sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/wordTextView"
@@ -42,6 +42,7 @@
         android:layout_height="298dp"
         android:layout_below="@id/wordTextView"
         android:layout_marginTop="20dp"
+        android:scrollbars="none"
         >
 
         <LinearLayout
@@ -71,7 +72,6 @@
                 android:id="@+id/association2EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/association1EditText"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_tests_border"
@@ -90,7 +90,6 @@
                 android:id="@+id/association3EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/association2EditText"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_tests_border"
@@ -109,7 +108,6 @@
                 android:id="@+id/association4EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/association3EditText"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_tests_border"
@@ -127,7 +125,6 @@
                 android:id="@+id/association5EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/association4EditText"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_tests_border"

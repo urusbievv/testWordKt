@@ -8,12 +8,20 @@
     android:background="@color/dark_gray"
     tools:context=".activity.MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/im_roud"
+        android:elevation="6dp" />
+
     <LinearLayout
         android:id="@+id/avtores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="170dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -24,6 +32,7 @@
             android:text="@string/hello"
             android:textColor="@color/white"
             android:textSize="30sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -31,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/avtores"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="90dp"
         android:orientation="vertical">
 
 
