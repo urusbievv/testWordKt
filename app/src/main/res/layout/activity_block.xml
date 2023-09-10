@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/two_blue"
+    android:padding="16dp">
+
+
+
+
+    <TextView
+        android:textColor="@color/text_all"
+        android:layout_marginTop="60dp"
+        android:id="@+id/testView3"
+        android:fontFamily="@font/intelone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/log_block"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/wordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/testView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/intelone"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+
+    <ScrollView
+        android:id="@+id/scroll_view_edit"
+        android:layout_width="match_parent"
+        android:layout_height="298dp"
+        android:layout_below="@id/wordTextView"
+        android:layout_marginTop="20dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/association1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/edit_tests_border"
+                android:gravity="top"
+                android:hint="@string/input_test_1"
+                android:inputType="text"
+                android:fontFamily="@font/intelone"
+                android:minHeight="48dp"
+                android:paddingLeft="14dp"
+                android:paddingTop="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_all"
+                android:textSize="18sp" />
+
+            <!-- Второй EditText -->
+            <EditText
+                android:id="@+id/association2EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/association1EditText"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_tests_border"
+                android:gravity="top"
+                android:hint="@string/input_test_2"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:fontFamily="@font/intelone"
+                android:paddingLeft="14dp"
+                android:paddingTop="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_all"
+                android:textSize="18sp" />
+
+            <!-- Третий EditText -->
+            <EditText
+                android:id="@+id/association3EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/association2EditText"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_tests_border"
+                android:gravity="top"
+                android:hint="@string/input_test_3"
+                android:inputType="text"
+                android:fontFamily="@font/intelone"
+                android:minHeight="48dp"
+                android:paddingLeft="14dp"
+                android:paddingTop="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_all"
+                android:textSize="18sp" />
+
+
+            <EditText
+                android:id="@+id/association4EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/association3EditText"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_tests_border"
+                android:gravity="top"
+                android:hint="@string/input_test_4"
+                android:inputType="text"
+                android:fontFamily="@font/intelone"
+                android:minHeight="48dp"
+                android:paddingLeft="14dp"
+                android:paddingTop="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_all"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/association5EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/association4EditText"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_tests_border"
+                android:gravity="top"
+                android:hint="@string/input_test_5"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:fontFamily="@font/intelone"
+                android:paddingLeft="14dp"
+                android:paddingTop="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_all"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_button"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/scroll_view_edit"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:paddingHorizontal="50dp"
+            android:backgroundTint="@color/li_gray"
+            android:layout_marginRight="3dp"
+            android:fontFamily="@font/intelone"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go"
+            android:fontFamily="@font/intelone"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"
+            android:layout_marginLeft="3dp"
+            android:paddingHorizontal="50dp"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/exit_btn"
+        android:minWidth="58dp"
+        android:minHeight="38dp"
+        android:onClick="goBack"
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        app:tint="@color/text_all"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        />
+
+</RelativeLayout>
