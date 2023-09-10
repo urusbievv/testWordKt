@@ -14,7 +14,6 @@ import com.example.testwordkot.R
 import com.example.testwordkot.activity.maps.MapActivity
 import com.example.testwordkot.model.Word
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.storage.FirebaseStorage
 import java.io.BufferedReader
 import java.io.IOException
@@ -103,16 +102,15 @@ class BlockActivity : AppCompatActivity() {
     }
 
 
-    private fun checkFields(): Boolean{
+    private fun checkFields(): Boolean {
         val association1Text: String = association1EditText.text.toString().trim()
         val association2Text: String = association2EditText.text.toString().trim()
         val association3Text: String = association3EditText.text.toString().trim()
         val association4Text: String = association4EditText.text.toString().trim()
         val association5Text: String = association5EditText.text.toString().trim()
 
-        val isFieldsFilled = (association1Text.isNotEmpty() && association2Text.isNotEmpty() && association3Text.isNotEmpty()
+        return (association1Text.isNotEmpty() && association2Text.isNotEmpty() && association3Text.isNotEmpty()
                 && association4Text.isNotEmpty() && association5Text.isNotEmpty())
-        return isFieldsFilled
     }
 
     private fun updateAssociationsList() {
@@ -123,7 +121,7 @@ class BlockActivity : AppCompatActivity() {
             val association4 = association4EditText.text.toString()
             val association5 = association5EditText.text.toString()
 
-            // Добавляем ассоциации в associationsList в соответствии с индексом слова
+            // Добавляем ассоциации
             associationsList.add(association1)
             associationsList.add(association2)
             associationsList.add(association3)
@@ -205,19 +203,23 @@ class BlockActivity : AppCompatActivity() {
 
     // Сохранение ответов в файл
     private fun saveAnswersToFile() {
+
+        // Получение пользователя
         val currentUser = auth.currentUser
         val userEmail = currentUser?.email
-
         if (currentUser == null || userEmail == null) {
             return
         }
 
+        // создание пути к папке
         val sanitizedEmail = sanitizeEmail(userEmail)
         val fileName = "Блок_1_$sanitizedEmail.txt"
         val storageRef = FirebaseStorage.getInstance().reference
         val userRef = storageRef.child("users").child(sanitizedEmail)
         val answersRef = userRef.child("Блок_1").child(fileName)
 
+
+        // формирует новые данные в файл
         val newData = buildString {
             append("Блок 1 (Легкий). Ответы\n\n")
             for (i in wordList.indices) {
@@ -235,12 +237,15 @@ class BlockActivity : AppCompatActivity() {
             }
         }
 
+        // преобразует в байт массив
         val newDataBytes = newData.toByteArray()
 
+        // считывает существующие данные из файла
         answersRef.getBytes(Long.MAX_VALUE)
             .addOnSuccessListener { existingDataBytes ->
                 val existingData = String(existingDataBytes, Charsets.UTF_8)
 
+                // Объединение существующих и новых данных
                 val updatedData = if (existingData.isNotEmpty()) {
                     "$existingData\n----------------\n$newData"
                 } else {

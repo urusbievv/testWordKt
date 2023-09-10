@@ -24,7 +24,6 @@ class MapActivity : AppCompatActivity() {
     private lateinit var storageFireBase: FirebaseStorage
     private lateinit var storageReference: StorageReference
 
-    private lateinit var textEmail: TextView
     private lateinit var exitProfile: TextView
     private lateinit var btnLevel: Button
     private lateinit var btnViewFile: Button
@@ -48,7 +47,6 @@ class MapActivity : AppCompatActivity() {
         storageFireBase = FirebaseStorage.getInstance()
         storageReference = storageFireBase.reference
         initView()
-        getEmail()
         setButtonClickListeners()
     }
 
@@ -61,7 +59,6 @@ class MapActivity : AppCompatActivity() {
         btnViewFile = findViewById(R.id.view_files_button)
         exitProfile = findViewById(R.id.exit_profile)
         btnSupport = findViewById(R.id.btn_support)
-        textEmail = findViewById(R.id.txt_email);
         btnLevel = findViewById(R.id.btn_level);
     }
 
@@ -90,11 +87,6 @@ class MapActivity : AppCompatActivity() {
         exitProfile.setOnClickListener {
             startActivity(Intent(this@MapActivity,MainActivity::class.java))
         }
-    }
-
-    private fun getEmail(){
-        val email = intent.getStringExtra("email")
-        textEmail.text = email
     }
 
 }

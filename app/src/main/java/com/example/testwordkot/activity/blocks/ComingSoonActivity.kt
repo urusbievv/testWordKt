@@ -10,7 +10,4 @@ class ComingSoonActivity : AppCompatActivity() {
         setContentView(R.layout.activity_coming_soon)
     }
 
-    fun goBack(){
-        finish()
-    }
 }
