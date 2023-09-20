@@ -78,5 +78,5 @@ class MapActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
     }
-    //
+
 }
