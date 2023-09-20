@@ -1,8 +1,9 @@
-package com.example.testwordkot.activity
+package com.example.testwordkot.ui.activity
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
 import com.google.firebase.database.DatabaseReference
@@ -12,6 +13,7 @@ class SupportActivity : AppCompatActivity() {
 
     private lateinit var etMessage: EditText
     private lateinit var btnSend: Button
+    private lateinit var btnImageBack: ImageButton
 
     private lateinit var databaseRef: DatabaseReference
 
@@ -25,11 +27,13 @@ class SupportActivity : AppCompatActivity() {
         databaseRef = FirebaseDatabase.getInstance().getReference("support_messages")
         initView()
         btnSend.setOnClickListener { sendMessage() }
+        btnImageBack.setOnClickListener { finish() }
     }
 
     private fun initView(){
         etMessage = findViewById(R.id.et_message)
         btnSend = findViewById(R.id.btn_send)
+        btnImageBack = findViewById(R.id.imageButton4)
     }
 
     private fun sendMessage(){

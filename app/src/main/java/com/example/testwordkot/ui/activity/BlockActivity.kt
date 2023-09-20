@@ -1,4 +1,4 @@
-package com.example.testwordkot.activity.blocks
+package com.example.testwordkot.ui.activity
 
 import android.content.Intent
 import android.media.MediaPlayer
@@ -7,12 +7,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.activity.maps.MapActivity
-import com.example.testwordkot.model.Word
+import com.example.testwordkot.data.model.Word
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import java.io.BufferedReader
@@ -29,6 +29,7 @@ class BlockActivity : AppCompatActivity() {
 
     private lateinit var btnNext: Button
     private lateinit var btnBack: Button
+    private lateinit var btnImageBack: ImageButton
 
     private lateinit var wordTextView: TextView
     private lateinit var mediaPlayer: MediaPlayer
@@ -80,11 +81,14 @@ class BlockActivity : AppCompatActivity() {
 
         btnNext = findViewById(R.id.nextButton)
         btnBack = findViewById(R.id.backButton)
+        btnImageBack = findViewById(R.id.imageButton4)
+
     }
 
     private fun setButtonClickListeners(){
         btnNext.setOnClickListener{showNextWord()}
         btnBack.setOnClickListener{showBackWord()}
+        btnImageBack.setOnClickListener { finish() }
     }
 
     private fun showToast(message: String) {
@@ -301,8 +305,6 @@ class BlockActivity : AppCompatActivity() {
         finish()
     }
 
-    fun goBack() {
-        finish()
-    }
+
 }
 

@@ -17,27 +17,27 @@
         android:theme="@style/Theme.TestWordKot"
         tools:targetApi="31">
         <activity
-            android:name=".activity.SupportActivity"
+            android:name=".ui.activity.SupportActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.blocks.ComingSoonActivity"
+            android:name=".ui.activity.ComingSoonActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.blocks.BlockActivity"
+            android:name=".ui.activity.BlockActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.maps.MapActivity"
+            android:name=".ui.activity.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LevelActivity"
+            android:name=".ui.activity.LevelActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.registration.UserRegistrationActivity"
+            android:name=".ui.activity.UserRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.testwordkot.activity
+package com.example.testwordkot.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -6,16 +6,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.activity.registration.UserRegistrationActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.rengwuxian.materialedittext.MaterialEditText
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputLayout: LinearLayout
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth // вынести в слой дата и сделать абстракции в домене
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        // тосты лучше не показывать, например, snackbar
     }
 
     private fun showSnackBar(message: String) {
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, UserRegistrationActivity::class.java)
                 startActivity(intent)
             } else {
-                showToast("Неверный пароль")
+                    showSnackBar("Неверный пароль") // все ресурсы лежат в xml и как const
             }
         }
 
@@ -95,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     val intent = Intent(this@MainActivity, LevelActivity::class.java)
-                    startActivity(intent)
+                    startActivity(intent) // все ресурсы лежат в xml и как const
                     finish()
                 }
                 .addOnFailureListener {

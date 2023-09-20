@@ -1,14 +1,13 @@
-package com.example.testwordkot.activity.registration
+package com.example.testwordkot.ui.activity
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.model.User
+import com.example.testwordkot.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -22,8 +21,6 @@ class UserRegistrationActivity : AppCompatActivity() {
     private lateinit var registerButton: Button
     private lateinit var btnOpenStorage: Button
     private lateinit var auth: FirebaseAuth
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,35 +88,5 @@ class UserRegistrationActivity : AppCompatActivity() {
                 }
             }
     }
-
-//    private fun openFirebaseStorage() {
-//        val currentUser = FirebaseAuth.getInstance().currentUser
-//        currentUser?.let {
-//            val userEmail = it.email
-//            userEmail?.let { email ->
-//                val sanitizedEmail = sanitizeEmail(email)
-//
-//                // Создаем URL для просмотра папки пользователя в Firebase Storage
-//                val storageUrl = "должны быть ссылка$sanitizedEmail"
-//
-//                // Открываем URL в веб-браузере
-//                val uri = Uri.parse(storageUrl)
-//                val intent = Intent(Intent.ACTION_VIEW, uri)
-//                startActivity(intent)
-//            }
-//        }
-//    }
-
-    private fun sanitizeEmail(email: String): String {
-        return email.replace(".", "_").replace("@", "_")
-    }
-
-
-    fun goBack() {
-        onBackPressedDispatcher.onBackPressed()
-    }
-
-    fun goBack(view: View) {}
-
 
 }

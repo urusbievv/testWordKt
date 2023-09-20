@@ -1,11 +1,10 @@
-package com.example.testwordkot.activity
+package com.example.testwordkot.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.activity.maps.MapActivity
 
 class LevelActivity : AppCompatActivity() {
 

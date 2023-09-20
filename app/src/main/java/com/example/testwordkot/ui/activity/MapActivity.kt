@@ -1,24 +1,19 @@
-package com.example.testwordkot.activity.maps
+package com.example.testwordkot.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.activity.LevelActivity
-import com.example.testwordkot.activity.MainActivity
-import com.example.testwordkot.activity.SupportActivity
-import com.example.testwordkot.activity.blocks.BlockActivity
-import com.example.testwordkot.activity.blocks.ComingSoonActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var storageFireBase: FirebaseStorage
@@ -62,30 +57,25 @@ class MapActivity : AppCompatActivity() {
         btnLevel = findViewById(R.id.btn_level);
     }
 
-    private fun setButtonClickListeners(){
-        block1.setOnClickListener {
-            startActivity(Intent(this@MapActivity, BlockActivity::class.java))
+    private fun setButtonClickListeners() { // упрощенный
+        listOf(block1, block2, block3, block4, block5, btnSupport, btnLevel, exitProfile).forEach {
+            it.setOnClickListener(this)
         }
-        block2.setOnClickListener {
-            startActivity(Intent(this@MapActivity, ComingSoonActivity::class.java))
+    }
+
+    override fun onClick(clicked: View) {
+        val intent: Intent? = when(clicked.id) {
+            block1.id -> Intent(this@MapActivity, BlockActivity::class.java)
+            block2.id, block3.id, block4.id, block5.id  ->
+                Intent(this@MapActivity, ComingSoonActivity::class.java)
+            btnSupport.id  -> Intent(this@MapActivity,SupportActivity::class.java)
+            btnLevel.id  -> Intent(this@MapActivity,LevelActivity::class.java)
+            exitProfile.id -> Intent(this@MapActivity,MainActivity::class.java)
+            else -> null
         }
-        block3.setOnClickListener {
-            startActivity(Intent(this@MapActivity, ComingSoonActivity::class.java))
-        }
-        block4.setOnClickListener {
-            startActivity(Intent(this@MapActivity, ComingSoonActivity::class.java))
-        }
-        block5.setOnClickListener {
-            startActivity(Intent(this@MapActivity, ComingSoonActivity::class.java))
-        }
-        btnSupport.setOnClickListener{
-            startActivity(Intent(this@MapActivity,SupportActivity::class.java))
-        }
-        btnLevel.setOnClickListener {
-            startActivity(Intent(this@MapActivity,LevelActivity::class.java))
-        }
-        exitProfile.setOnClickListener {
-            startActivity(Intent(this@MapActivity,MainActivity::class.java))
+
+        if (intent != null) {
+            startActivity(intent)
         }
     }
 

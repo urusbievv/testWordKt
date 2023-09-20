@@ -6,10 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
     android:orientation="vertical"
-    tools:context=".activity.maps.MapActivity">
-
-    <!-- Profile Name TextView -->
-    <!-- Profile Image ImageView -->
+    tools:context=".ui.activity.MapActivity">
 
     <TextView
         android:id="@+id/textView7"
