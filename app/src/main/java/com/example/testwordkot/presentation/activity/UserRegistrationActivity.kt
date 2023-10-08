@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
 import com.example.testwordkot.data.repository.RegisterRepositoryImpl
-import com.example.testwordkot.data.storage.repository.FirebaseStorageRegister
+import com.example.testwordkot.data.storage.repository.RegisterFirebaseStorage
 import com.example.testwordkot.domain.model.UserDomain
 import com.example.testwordkot.domain.usecase.UserRegisterUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class UserRegistrationActivity : AppCompatActivity() {
 
-    private val userRegisterStorage by lazy { FirebaseStorageRegister() }
+    private val userRegisterStorage by lazy { RegisterFirebaseStorage() }
     private val userRegisterRepository by lazy { RegisterRepositoryImpl(userRegisterStorage) }
     private val userRegisterUseCase by lazy { UserRegisterUseCase(userRegisterRepository) }
 
@@ -50,8 +50,6 @@ class UserRegistrationActivity : AppCompatActivity() {
                 showToast("Введите все данные для регистрации")
             } else {
                 val user = UserDomain(name, email, password, phone, schoolClass)
-
-
                 userRegisterUseCase.execute(user) { success ->
                     runOnUiThread {
                         if (success) {

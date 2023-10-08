@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
 import com.example.testwordkot.data.repository.LoginRepositoryImpl
-import com.example.testwordkot.data.storage.repository.FirebaseStorageLogin
+import com.example.testwordkot.data.storage.repository.LoginFirebaseStorage
 import com.example.testwordkot.domain.usecase.UserLoginUseCase
 
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
 
 
-    private val userLoginStorage by lazy { FirebaseStorageLogin() }
+    private val userLoginStorage by lazy { LoginFirebaseStorage() }
     private val userLoginRepository by lazy { LoginRepositoryImpl(userLoginStorage) }
     private val userLoginUseCase by lazy { UserLoginUseCase(userLoginRepository) }
 
@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //FirebaseApp.initializeApp(this)
         initViews()
         btnAdmin.setOnClickListener { showAdminPasswordDialog() }
         btnLogin.setOnClickListener { onLoginButtonClicked() }

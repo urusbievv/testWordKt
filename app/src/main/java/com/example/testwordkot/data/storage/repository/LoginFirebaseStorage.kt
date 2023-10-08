@@ -1,11 +1,10 @@
 package com.example.testwordkot.data.storage.repository
 
-import com.example.testwordkot.data.model.User
 import com.example.testwordkot.data.storage.UserLoginStorage
 import com.google.firebase.auth.FirebaseAuth
 
 
-class FirebaseStorageLogin : UserLoginStorage {
+class LoginFirebaseStorage : UserLoginStorage {
 
     private val authStorage = FirebaseAuth.getInstance()
 

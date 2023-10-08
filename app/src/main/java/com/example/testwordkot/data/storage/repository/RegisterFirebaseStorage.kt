@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 
-class FirebaseStorageRegister : UserRegisterStorage {
+class RegisterFirebaseStorage : UserRegisterStorage {
 
     private val authStorage = FirebaseAuth.getInstance()
     private val databaseStorage = FirebaseDatabase.getInstance().getReference("Users")
