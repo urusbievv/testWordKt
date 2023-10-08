@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -7,11 +7,19 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
-import com.example.testwordkot.data.model.User
+import com.example.testwordkot.data.repository.RegisterRepositoryImpl
+import com.example.testwordkot.data.storage.repository.FirebaseStorageRegister
+import com.example.testwordkot.domain.model.UserDomain
+import com.example.testwordkot.domain.usecase.UserRegisterUseCase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+
 
 class UserRegistrationActivity : AppCompatActivity() {
+
+    private val userRegisterStorage by lazy { FirebaseStorageRegister() }
+    private val userRegisterRepository by lazy { RegisterRepositoryImpl(userRegisterStorage) }
+    private val userRegisterUseCase by lazy { UserRegisterUseCase(userRegisterRepository) }
+
 
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
@@ -36,22 +44,35 @@ class UserRegistrationActivity : AppCompatActivity() {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val phone = phoneEditText.text.toString()
-            val classE = classEditText.text.toString()
-
+            val schoolClass = classEditText.text.toString()
 
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 showToast("Введите все данные для регистрации")
             } else {
-                registerUser(name, email, password, phone, classE)
+                val user = UserDomain(name, email, password, phone, schoolClass)
+
+
+                userRegisterUseCase.execute(user) { success ->
+                    runOnUiThread {
+                        if (success) {
+                            showToast("Регистрация успешна")
+                            finish()
+                        } else {
+                            showToast("Ошибка при регистрации")
+                        }
+                    }
+                }
             }
         }
 
+
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun initViews(){
+    private fun initViews() {
         nameEditText = findViewById(R.id.registration_name)
         emailEditText = findViewById(R.id.registration_email)
         passwordEditText = findViewById(R.id.registration_password)
@@ -61,32 +82,5 @@ class UserRegistrationActivity : AppCompatActivity() {
         btnOpenStorage = findViewById(R.id.btnOpenStorage)
     }
 
-    private fun registerUser(name: String, email: String, password: String, phone: String, classE: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val userId = auth.currentUser?.uid
-
-                    // Создаем объект User
-                    val newUser = User(name, email, password, phone, classE)
-
-                    // Ссылка на базу данных
-                    val databaseRef = FirebaseDatabase.getInstance().getReference("Users")
-
-                    userId?.let {
-                        databaseRef.child(it).setValue(newUser)
-                            .addOnSuccessListener {
-                                showToast("Регистрация успешна")
-                                finish()
-                            }
-                            .addOnFailureListener { e ->
-                                showToast("Ошибка регистрации: ${e.message}")
-                            }
-                    }
-                } else {
-                    showToast("Ошибка при регистрации: ${task.exception?.message}")
-                }
-            }
-    }
 
 }

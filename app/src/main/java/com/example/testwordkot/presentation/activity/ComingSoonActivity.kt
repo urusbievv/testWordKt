@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import android.os.Bundle
 import android.widget.Button

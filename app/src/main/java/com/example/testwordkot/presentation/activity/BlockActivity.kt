@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import android.content.Intent
 import android.media.MediaPlayer
@@ -304,6 +304,8 @@ class BlockActivity : AppCompatActivity() {
         playSound()
         finish()
     }
+
+
 
 
 }
