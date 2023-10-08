@@ -181,8 +181,6 @@ class BlockActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun showBackWord() {
         if (currentWordIndex > 0 && currentWordIndex * 6 < wordList.size) {
             currentWordIndex--
