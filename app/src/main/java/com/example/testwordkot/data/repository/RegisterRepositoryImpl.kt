@@ -6,13 +6,13 @@ import com.example.testwordkot.domain.model.UserDomain
 import com.example.testwordkot.domain.repository.RegisterRepository
 
 
-class RegisterRepositoryImpl(private val userRegisterStorage: UserRegisterStorage): RegisterRepository {
+class RegisterRepositoryImpl(private val userRegisterStorage: UserRegisterStorage):
+    RegisterRepository {
 
-    override fun registerUser(user: UserDomain, callback: (Boolean) -> Unit) {
+    override fun registerUser(user: UserDomain, callback: (Boolean) -> Unit) =
         userRegisterStorage.register(mapToStorage(user)) { success ->
             callback(success)
         }
-    }
 
 
     private fun mapToStorage(userDomain: UserDomain): User =

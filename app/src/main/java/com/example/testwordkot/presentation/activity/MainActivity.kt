@@ -1,4 +1,5 @@
 package com.example.testwordkot.presentation.activity
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
 
-
     private val userLoginStorage by lazy { LoginFirebaseStorage() }
     private val userLoginRepository by lazy { LoginRepositoryImpl(userLoginStorage) }
     private val userLoginUseCase by lazy { UserLoginUseCase(userLoginRepository) }
@@ -44,17 +44,11 @@ class MainActivity : AppCompatActivity() {
         btnLogin.setOnClickListener { onLoginButtonClicked() }
     }
 
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        // тосты лучше не показывать, например, snackbar
-    }
-
     private fun showSnackBar(message: String) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun initViews(){
+    private fun initViews() {
         root = findViewById(R.id.root_element)
         avtores = findViewById(R.id.avtores)
         inputLayout = findViewById(R.id.inputLayout)
@@ -78,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, UserRegistrationActivity::class.java)
                 startActivity(intent)
             } else {
-                    showSnackBar("Неверный пароль") // все ресурсы лежат в xml и как const
+                showSnackBar("Неверный пароль")
             }
         }
 
@@ -86,7 +80,6 @@ class MainActivity : AppCompatActivity() {
 
         builder.show()
     }
-
 
     private fun onLoginButtonClicked() {
         val email: String = emailEditText.text.toString()

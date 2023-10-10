@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.testwordkot.R
 import com.example.testwordkot.data.model.Word
+
 import com.example.testwordkot.data.repository.AnswerRepositoryImpl
 import com.example.testwordkot.data.repository.WordRepositoryImpl
 import com.example.testwordkot.data.storage.repository.AnswerFirebaseStorage
@@ -21,7 +22,7 @@ import com.example.testwordkot.data.storage.repository.WordFirebaseStorage
 import com.example.testwordkot.domain.usecase.AnswerSendUseCase
 import com.example.testwordkot.domain.usecase.WordGetUseCase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
+
 import kotlinx.coroutines.launch
 
 class BlockActivity : AppCompatActivity() {
@@ -34,7 +35,6 @@ class BlockActivity : AppCompatActivity() {
     private val answerStorage by lazy { AnswerFirebaseStorage() }
     private val answerRepository by lazy { AnswerRepositoryImpl(answerStorage) }
     private val answerSendUseCase by lazy { AnswerSendUseCase(answerRepository) }
-
 
     private lateinit var association1EditText: EditText
     private lateinit var association2EditText: EditText
@@ -57,7 +57,6 @@ class BlockActivity : AppCompatActivity() {
 
     private var currentWordIndex: Int = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_block)
@@ -65,8 +64,8 @@ class BlockActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        auth = FirebaseAuth.getInstance()
         initView()
+        auth = FirebaseAuth.getInstance()
         selectedWords = HashSet()
         if (assets != null) {
             wordList = wordSendUseCase.execute()
@@ -120,7 +119,6 @@ class BlockActivity : AppCompatActivity() {
 
     }
 
-
     private fun checkFields(): Boolean {
         val association1Text: String = association1EditText.text.toString().trim()
         val association2Text: String = association2EditText.text.toString().trim()
@@ -169,11 +167,10 @@ class BlockActivity : AppCompatActivity() {
                         onSuccess = {
                             showToast("Ответы успешно сохранены")
                             goToMapActivity()
-                        },
-                        onFailure = { errorMessage ->
-                            showToast("Ошибка сохранения ответов: $errorMessage")
                         }
-                    )
+                    ) { errorMessage ->
+                        showToast("Ошибка сохранения ответов: $errorMessage")
+                    }
                 }
             } else {
                 showToast("Заполните все ячейки !!!")
@@ -197,10 +194,6 @@ class BlockActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable) {checkFields()}
-    }
-
-    private fun sanitizeEmail(email: String): String {
-        return email.replace(".", "_").replace("@", "_")
     }
 
     private fun goToMapActivity() {

@@ -30,7 +30,6 @@ class MapActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var block4: LinearLayout
     private lateinit var block5: LinearLayout
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -78,5 +77,4 @@ class MapActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
     }
-    //
 }

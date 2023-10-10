@@ -9,17 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.testwordkot.R
 import com.example.testwordkot.data.repository.RegisterRepositoryImpl
 import com.example.testwordkot.data.storage.repository.RegisterFirebaseStorage
-import com.example.testwordkot.domain.model.UserDomain
 import com.example.testwordkot.domain.usecase.UserRegisterUseCase
+import com.example.testwordkot.domain.model.UserDomain
 import com.google.firebase.auth.FirebaseAuth
+
 
 
 class UserRegistrationActivity : AppCompatActivity() {
 
     private val userRegisterStorage by lazy { RegisterFirebaseStorage() }
-    private val userRegisterRepository by lazy { RegisterRepositoryImpl(userRegisterStorage) }
-    private val userRegisterUseCase by lazy { UserRegisterUseCase(userRegisterRepository) }
-
+    private val userRegisterRepository by lazy {
+        RegisterRepositoryImpl(
+            userRegisterStorage
+        )
+    }
+    private val userRegisterUseCase by lazy {
+        UserRegisterUseCase(
+            userRegisterRepository
+        )
+    }
 
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
@@ -29,7 +37,6 @@ class UserRegistrationActivity : AppCompatActivity() {
     private lateinit var registerButton: Button
     private lateinit var btnOpenStorage: Button
     private lateinit var auth: FirebaseAuth
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +56,13 @@ class UserRegistrationActivity : AppCompatActivity() {
             if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                 showToast("Введите все данные для регистрации")
             } else {
-                val user = UserDomain(name, email, password, phone, schoolClass)
+                val user = UserDomain(
+                    name,
+                    email,
+                    password,
+                    phone,
+                    schoolClass
+                )
                 userRegisterUseCase.execute(user) { success ->
                     runOnUiThread {
                         if (success) {
@@ -79,6 +92,5 @@ class UserRegistrationActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registration_register_button)
         btnOpenStorage = findViewById(R.id.btnOpenStorage)
     }
-
 
 }

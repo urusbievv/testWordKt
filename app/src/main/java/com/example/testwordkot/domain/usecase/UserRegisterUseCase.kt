@@ -6,10 +6,9 @@ import com.example.testwordkot.domain.repository.RegisterRepository
 
 class UserRegisterUseCase(private val registerRepository: RegisterRepository){
 
-    fun execute(user: UserDomain, callback: (Boolean) -> Unit) {
+    fun execute(user: UserDomain, callback: (Boolean) -> Unit) =
         registerRepository.registerUser(user) { success ->
             callback(success)
         }
-    }
 
 }
