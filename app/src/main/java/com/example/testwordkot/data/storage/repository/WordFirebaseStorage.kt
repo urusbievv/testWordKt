@@ -9,6 +9,8 @@ import java.io.IOException
 import java.io.InputStreamReader
 
 
+private const val FILE_WORDS = "words.txt"
+
 class WordFirebaseStorage(private val context: Context) : WordStorage {
 
     override fun get(): List<Word> {
@@ -16,7 +18,7 @@ class WordFirebaseStorage(private val context: Context) : WordStorage {
         val assetManager = context.assets
 
         try {
-            val inputStream = assetManager.open("words.txt")
+            val inputStream = assetManager.open(FILE_WORDS)
             val reader = BufferedReader(InputStreamReader(inputStream))
             val lines = mutableListOf<String>()
             var line: String? = reader.readLine()

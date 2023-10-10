@@ -7,10 +7,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 
+private const val USERS = "Users"
+
 class RegisterFirebaseStorage : UserRegisterStorage {
 
     private val authStorage = FirebaseAuth.getInstance()
-    private val databaseStorage = FirebaseDatabase.getInstance().getReference("Users")
+    private val databaseStorage = FirebaseDatabase.getInstance().getReference(USERS)
 
     override fun register(user: User, callback: (Boolean) -> Unit) {
         authStorage.createUserWithEmailAndPassword(user.email, user.password)
