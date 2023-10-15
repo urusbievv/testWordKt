@@ -34,7 +34,7 @@
             android:name=".presentation.activity.LevelActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.activity.UserRegistrationActivity"
+            android:name=".presentation.activity.RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.activity.MainActivity"

@@ -1,8 +1,7 @@
 package com.example.testwordkot.data.repository
 
-import com.example.testwordkot.data.model.Word
+
 import com.example.testwordkot.data.storage.AnswerStorage
-import com.example.testwordkot.domain.model.WordDomain
 import com.example.testwordkot.domain.repository.AnswerRepository
 
 class AnswerRepositoryImpl(private val answerStorage: AnswerStorage):

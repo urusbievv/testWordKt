@@ -3,35 +3,22 @@ package com.example.testwordkot.data.storage.repository
 import android.content.Context
 import com.example.testwordkot.data.model.Word
 import com.example.testwordkot.data.storage.WordStorage
-
+import com.example.testwordkot.data.storage.utils.ConstantsDATA.FILE_WORDS
+import com.example.testwordkot.data.storage.utils.ConstantsDATA.EASY_LEVEL_BLOCK_1_NUMBER_WORDS
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-
-private const val FILE_WORDS = "words.txt"
-
 class WordFirebaseStorage(private val context: Context) : WordStorage {
-
     override fun get(): List<Word> {
         val wordList: MutableList<Word> = mutableListOf()
-        val assetManager = context.assets
-
         try {
-            val inputStream = assetManager.open(FILE_WORDS)
-            val reader = BufferedReader(InputStreamReader(inputStream))
-            val lines = mutableListOf<String>()
-            var line: String? = reader.readLine()
-            while (line != null) {
-                lines.add(line.trim())
-                line = reader.readLine()
-            }
-            inputStream.close()
-            lines.shuffle()
-            val wordsToAdd = minOf(2, lines.size)
-            for (i in 0 until wordsToAdd) {
-                val word = Word(lines[i], emptyList())
-                wordList.add(word)
+            context.assets.open(FILE_WORDS).use { inputStream ->
+                val lines = BufferedReader(InputStreamReader(inputStream)).readLines().map { it.trim() }
+                // Перемешивание строк в случайном порядке
+                val shuffledLines = lines.shuffled()
+                val wordsToAdd = minOf(EASY_LEVEL_BLOCK_1_NUMBER_WORDS, shuffledLines.size)
+                wordList.addAll(shuffledLines.take(wordsToAdd).map { Word(it, emptyList()) })
             }
         } catch (e: IOException) {
             e.printStackTrace()

@@ -2,18 +2,17 @@ package com.example.testwordkot.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.testwordkot.R
-import com.example.testwordkot.data.repository.LoginRepositoryImpl
-import com.example.testwordkot.data.storage.repository.LoginFirebaseStorage
-import com.example.testwordkot.domain.usecase.UserLoginUseCase
+import com.example.testwordkot.presentation.viewModel.MainViewModel
+import com.example.testwordkot.presentation.viewModel.factory.MainViewModelFactory
 
 import com.google.android.material.snackbar.Snackbar
 
@@ -28,9 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
 
-    private val userLoginStorage by lazy { LoginFirebaseStorage() }
-    private val userLoginRepository by lazy { LoginRepositoryImpl(userLoginStorage) }
-    private val userLoginUseCase by lazy { UserLoginUseCase(userLoginRepository) }
+
+    private val vm: MainViewModel by viewModels() { MainViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +38,26 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         initViews()
+        vm.errorLiveData.observe(this, Observer { errorMessage ->
+            showSnackBar(errorMessage)
+        })
+        vm.successLiveData.observe(this, Observer { success ->
+            if (success) {
+                val intent = Intent(this@MainActivity, LevelActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
+
+        vm.adminPassword.observe(this, Observer { isAdminPassword ->
+            if (isAdminPassword) {
+                val intent = Intent(this@MainActivity, RegistrationActivity::class.java)
+                startActivity(intent)
+            } else {
+                showSnackBar("Неверный пароль")
+            }
+        })
+
         btnAdmin.setOnClickListener { showAdminPasswordDialog() }
         btnLogin.setOnClickListener { onLoginButtonClicked() }
     }
@@ -67,13 +85,7 @@ class MainActivity : AppCompatActivity() {
         val passwordEditText = dialogView.findViewById<EditText>(R.id.passwordEditText)
         builder.setPositiveButton("OK") { _, _ ->
             val enteredPassword = passwordEditText.text.toString()
-            val correctPassword = "123456" // Пароль для входа в режим Admin
-            if (enteredPassword == correctPassword) {
-                val intent = Intent(this@MainActivity, UserRegistrationActivity::class.java)
-                startActivity(intent)
-            } else {
-                showSnackBar("Неверный пароль")
-            }
+            vm.checkAdminPassword(enteredPassword)
         }
 
         builder.setNegativeButton("Отмена", null)
@@ -84,21 +96,7 @@ class MainActivity : AppCompatActivity() {
     private fun onLoginButtonClicked() {
         val email: String = emailEditText.text.toString()
         val password: String = passwordEditText.text.toString()
-
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            showSnackBar("Введите все данные для авторизации")
-        } else {
-            userLoginUseCase.execute(email, password,
-                onSuccess = {
-                    val intent = Intent(this@MainActivity, LevelActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                },
-                onFailure = { errorMessage ->
-                    showSnackBar(errorMessage)
-                }
-            )
-        }
+        vm.onLoginClicked(email, password)
     }
 
 

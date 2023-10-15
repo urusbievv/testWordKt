@@ -2,18 +2,22 @@ package com.example.testwordkot.data.storage.repository
 
 import com.example.testwordkot.data.model.User
 import com.example.testwordkot.data.storage.UserRegisterStorage
+import com.example.testwordkot.data.storage.utils.ConstantsDATA.USERS
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-
-private const val USERS = "Users"
 
 class RegisterFirebaseStorage : UserRegisterStorage {
 
     private val authStorage = FirebaseAuth.getInstance()
     private val databaseStorage = FirebaseDatabase.getInstance().getReference(USERS)
 
+    /**
+     * Регистрирует нового пользователя в Firebase Authentication.
+     *
+     * @param callback Указывает на успешность операции.
+     */
     override fun register(user: User, callback: (Boolean) -> Unit) {
         authStorage.createUserWithEmailAndPassword(user.email, user.password)
             .addOnCompleteListener { task ->
