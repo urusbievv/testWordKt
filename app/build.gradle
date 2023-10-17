@@ -63,6 +63,12 @@ dependencies {
 
     implementation "androidx.activity:activity-ktx:1.8.0"
 
+    // koin
+    def koin_version= "3.4.3"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+
 }
 
 apply plugin: 'com.google.gms.google-services'

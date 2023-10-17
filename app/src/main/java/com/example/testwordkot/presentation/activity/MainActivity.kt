@@ -6,15 +6,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.testwordkot.R
 import com.example.testwordkot.presentation.viewModel.MainViewModel
-import com.example.testwordkot.presentation.viewModel.factory.MainViewModelFactory
-
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
 
 
-    private val vm: MainViewModel by viewModels() { MainViewModelFactory() }
+    private val vm by viewModel<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

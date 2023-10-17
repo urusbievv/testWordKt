@@ -6,20 +6,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RelativeLayout
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.testwordkot.R
 import com.example.testwordkot.presentation.viewModel.RegisterViewModel
-import com.example.testwordkot.presentation.viewModel.factory.RegisterViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private val vm: RegisterViewModel by viewModels() { RegisterViewModelFactory() }
+    private val vm by viewModel<RegisterViewModel>()
+
     private lateinit var root: RelativeLayout
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
