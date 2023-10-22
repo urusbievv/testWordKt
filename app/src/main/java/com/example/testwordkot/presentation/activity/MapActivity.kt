@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -29,7 +29,6 @@ class MapActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var block3: LinearLayout
     private lateinit var block4: LinearLayout
     private lateinit var block5: LinearLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,5 +77,4 @@ class MapActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
     }
-    //
 }

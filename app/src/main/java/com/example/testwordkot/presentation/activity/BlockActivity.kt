@@ -1,4 +1,4 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
 
 import android.content.Intent
 import android.media.MediaPlayer
@@ -11,15 +11,30 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.testwordkot.R
 import com.example.testwordkot.data.model.Word
+
+import com.example.testwordkot.data.repository.AnswerRepositoryImpl
+import com.example.testwordkot.data.repository.WordRepositoryImpl
+import com.example.testwordkot.data.storage.repository.AnswerFirebaseStorage
+import com.example.testwordkot.data.storage.repository.WordFirebaseStorage
+import com.example.testwordkot.domain.usecase.AnswerSendUseCase
+import com.example.testwordkot.domain.usecase.WordGetUseCase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+
+import kotlinx.coroutines.launch
 
 class BlockActivity : AppCompatActivity() {
+
+
+    private val wordStorage by lazy { WordFirebaseStorage(applicationContext) }
+    private val wordRepository by lazy { WordRepositoryImpl(wordStorage) }
+    private val wordSendUseCase by lazy { WordGetUseCase(wordRepository) }
+
+    private val answerStorage by lazy { AnswerFirebaseStorage() }
+    private val answerRepository by lazy { AnswerRepositoryImpl(answerStorage) }
+    private val answerSendUseCase by lazy { AnswerSendUseCase(answerRepository) }
 
     private lateinit var association1EditText: EditText
     private lateinit var association2EditText: EditText
@@ -42,7 +57,6 @@ class BlockActivity : AppCompatActivity() {
 
     private var currentWordIndex: Int = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_block)
@@ -50,14 +64,14 @@ class BlockActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        auth = FirebaseAuth.getInstance()
         initView()
+        auth = FirebaseAuth.getInstance()
         selectedWords = HashSet()
         if (assets != null) {
-            wordList = loadWordsFromFile("words.txt")
+            wordList = wordSendUseCase.execute()
             associationsList = ArrayList()
             currentWordIndex = 0
-            wordTextView.text = wordList[currentWordIndex].getWord()
+            wordTextView.text = wordList[currentWordIndex].word
             setButtonClickListeners()
             association1EditText.addTextChangedListener(textWatcher)
             association2EditText.addTextChangedListener(textWatcher)
@@ -105,7 +119,6 @@ class BlockActivity : AppCompatActivity() {
 
     }
 
-
     private fun checkFields(): Boolean {
         val association1Text: String = association1EditText.text.toString().trim()
         val association2Text: String = association2EditText.text.toString().trim()
@@ -135,30 +148,40 @@ class BlockActivity : AppCompatActivity() {
     }
 
     private fun showNextWord(){
-        if (checkFields()){
-            updateAssociationsList()
-            currentWordIndex++
-            if (currentWordIndex < wordList.size){
-                wordTextView.text = wordList[currentWordIndex].getWord()
-                association1EditText.setText("")
-                association2EditText.setText("")
-                association3EditText.setText("")
-                association4EditText.setText("")
-                association5EditText.setText("")
-            }else{
-                saveAnswersToFile()
+        lifecycleScope.launch {
+            if (checkFields()) {
+                updateAssociationsList()
+                currentWordIndex++
+                if (currentWordIndex < wordList.size) {
+                    wordTextView.text = wordList[currentWordIndex].word
+                    association1EditText.setText("")
+                    association2EditText.setText("")
+                    association3EditText.setText("")
+                    association4EditText.setText("")
+                    association5EditText.setText("")
+                } else {
+                    answerSendUseCase.execute(
+                        userEmail = auth.currentUser?.email ?: "",
+                        wordList = wordList,
+                        associationsList = associationsList,
+                        onSuccess = {
+                            showToast("Ответы успешно сохранены")
+                            goToMapActivity()
+                        }
+                    ) { errorMessage ->
+                        showToast("Ошибка сохранения ответов: $errorMessage")
+                    }
+                }
+            } else {
+                showToast("Заполните все ячейки !!!")
             }
-        } else{
-            showToast("Заполните все ячейки !!!")
         }
     }
-
-
 
     private fun showBackWord() {
         if (currentWordIndex > 0 && currentWordIndex * 6 < wordList.size) {
             currentWordIndex--
-            wordTextView.text = wordList[currentWordIndex].getWord()
+            wordTextView.text = wordList[currentWordIndex].word
             association1EditText.setText(associationsList[currentWordIndex * 6])
             association2EditText.setText(associationsList[currentWordIndex * 6 + 1])
             association3EditText.setText(associationsList[currentWordIndex * 6 + 2])
@@ -173,138 +196,11 @@ class BlockActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {checkFields()}
     }
 
-    // Загрузка слов из файла
-    private fun loadWordsFromFile(fileName: String): List<Word> {
-        val wordList: MutableList<Word> = mutableListOf()
-        val assetManager = assets
-        try {
-            val inputStream = assetManager.open(fileName)
-            val reader = BufferedReader(InputStreamReader(inputStream))
-            val lines = mutableListOf<String>()
-
-            // Читаем все строки из файла и сохраняем их в список
-            var line: String? = reader.readLine()
-            while (line != null) {
-                lines.add(line.trim())
-                line = reader.readLine()
-            }
-            inputStream.close()
-
-            // Перемешиваем список строк
-            lines.shuffle()
-
-            val wordsToAdd = minOf(2, lines.size)
-            for (i in 0 until wordsToAdd) {
-                val word = Word(lines[i], emptyList())
-                wordList.add(word)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            showToast("Ошибка при загрузке данных")
-        }
-        return wordList
-    }
-
-    // Сохранение ответов в файл
-    private fun saveAnswersToFile() {
-
-        // Получение пользователя
-        val currentUser = auth.currentUser
-        val userEmail = currentUser?.email
-        if (currentUser == null || userEmail == null) {
-            return
-        }
-
-        // создание пути к папке
-        val sanitizedEmail = sanitizeEmail(userEmail)
-        val fileName = "Блок_1_$sanitizedEmail.txt"
-        val storageRef = FirebaseStorage.getInstance().reference
-        val userRef = storageRef.child("users").child(sanitizedEmail)
-        val answersRef = userRef.child("Блок_1").child(fileName)
-
-
-        // формирует новые данные в файл
-        val newData = buildString {
-            append("Блок 1 (Легкий). Ответы\n\n")
-            for (i in wordList.indices) {
-                val word = wordList[i].getWord()
-                val associations = (1..5).mapNotNull { j ->
-                    val index = i * 6 + j
-                    if (index < associationsList.size) associationsList[index] else null
-                }
-
-                append("Слово: $word\n")
-                associations.forEach { association ->
-                    append("Ассоциации: $association\n")
-                }
-                append("\n")
-            }
-        }
-
-        // преобразует в байт массив
-        val newDataBytes = newData.toByteArray()
-
-        // считывает существующие данные из файла
-        answersRef.getBytes(Long.MAX_VALUE)
-            .addOnSuccessListener { existingDataBytes ->
-                val existingData = String(existingDataBytes, Charsets.UTF_8)
-
-                // Объединение существующих и новых данных
-                val updatedData = if (existingData.isNotEmpty()) {
-                    "$existingData\n----------------\n$newData"
-                } else {
-                    newData
-                }
-
-                val updatedDataBytes = updatedData.toByteArray()
-
-                answersRef.putBytes(updatedDataBytes)
-                    .addOnSuccessListener {
-                        val message = if (existingData.isNotEmpty()) {
-                            "Ответы были обновлены."
-                        } else {
-                            "Ответы успешно отправлены."
-                        }
-                        showToast(message)
-                        goToMapActivity()
-                    }
-                    .addOnFailureListener {
-                        showToast("Ошибка сохранения данных: ${it.message}")
-                    }
-            }
-            .addOnFailureListener { exception ->
-                showToast("Ошибка чтения существующих данных: ${exception.message}")
-
-
-                answersRef.putBytes(newDataBytes)
-                    .addOnSuccessListener {
-                        showToast("Ответы отправлены.")
-                        goToMapActivity()
-                    }
-                    .addOnFailureListener {
-                        showToast("Ошибка создания нового файла: ${it.message}")
-                    }
-            }
-    }
-
-
-
-
-
-
-
-
-    private fun sanitizeEmail(email: String): String {
-        return email.replace(".", "_").replace("@", "_")
-    }
-
     private fun goToMapActivity() {
         val intent = Intent(this, MapActivity::class.java)
         startActivity(intent)
         playSound()
         finish()
     }
-
-
 }
 

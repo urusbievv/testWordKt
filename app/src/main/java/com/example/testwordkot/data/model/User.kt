@@ -6,7 +6,5 @@ class User(
     val email: String,
     val password: String,
     val phone: String,
-    val classE: String
-){
-
-}
+    val schoolClass: String
+)

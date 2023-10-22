@@ -1,18 +1,19 @@
-package com.example.testwordkot.ui.activity
+package com.example.testwordkot.presentation.activity
+
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.testwordkot.R
+import com.example.testwordkot.presentation.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +24,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputLayout: LinearLayout
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var auth: FirebaseAuth // вынести в слой дата и сделать абстракции в домене
+
+
+    private val vm by viewModel<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,24 +35,36 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        FirebaseApp.initializeApp(this)
-        auth = FirebaseAuth.getInstance()
         initViews()
+        vm.errorLiveData.observe(this, Observer { errorMessage ->
+            showSnackBar(errorMessage)
+        })
+        vm.successLiveData.observe(this, Observer { success ->
+            if (success) {
+                val intent = Intent(this@MainActivity, LevelActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
+
+        vm.adminPassword.observe(this, Observer { isAdminPassword ->
+            if (isAdminPassword) {
+                val intent = Intent(this@MainActivity, RegistrationActivity::class.java)
+                startActivity(intent)
+            } else {
+                showSnackBar("Неверный пароль")
+            }
+        })
+
         btnAdmin.setOnClickListener { showAdminPasswordDialog() }
         btnLogin.setOnClickListener { onLoginButtonClicked() }
-    }
-
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        // тосты лучше не показывать, например, snackbar
     }
 
     private fun showSnackBar(message: String) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun initViews(){
+    private fun initViews() {
         root = findViewById(R.id.root_element)
         avtores = findViewById(R.id.avtores)
         inputLayout = findViewById(R.id.inputLayout)
@@ -68,13 +83,7 @@ class MainActivity : AppCompatActivity() {
         val passwordEditText = dialogView.findViewById<EditText>(R.id.passwordEditText)
         builder.setPositiveButton("OK") { _, _ ->
             val enteredPassword = passwordEditText.text.toString()
-            val correctPassword = "123456" // Пароль для входа в режим Admin
-            if (enteredPassword == correctPassword) {
-                val intent = Intent(this@MainActivity, UserRegistrationActivity::class.java)
-                startActivity(intent)
-            } else {
-                    showSnackBar("Неверный пароль") // все ресурсы лежат в xml и как const
-            }
+            vm.checkAdminPassword(enteredPassword)
         }
 
         builder.setNegativeButton("Отмена", null)
@@ -82,23 +91,11 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-
-    private fun onLoginButtonClicked(){
+    private fun onLoginButtonClicked() {
         val email: String = emailEditText.text.toString()
         val password: String = passwordEditText.text.toString()
-
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-            showSnackBar("Введите все данные для авторизации")
-        } else {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    val intent = Intent(this@MainActivity, LevelActivity::class.java)
-                    startActivity(intent) // все ресурсы лежат в xml и как const
-                    finish()
-                }
-                .addOnFailureListener {
-                    showSnackBar("Ошибка авторизации")
-                }
-        }
+        vm.onLoginClicked(email, password)
     }
+
+
 }
