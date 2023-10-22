@@ -10,7 +10,6 @@ val appModule = module {
 
     viewModel{
         MainViewModel(userLoginUseCase = get())
-
     }
     viewModel {
         RegisterViewModel(userRegisterUseCase = get())
